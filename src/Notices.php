@@ -87,6 +87,7 @@ class Notices {
 		if ( isset( $this->notices[ $id ] ) ) {
 			return $this->notices[ $id ];
 		}
+		return null;
 	}
 
 	/**
