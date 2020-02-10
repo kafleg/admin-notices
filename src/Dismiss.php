@@ -156,6 +156,6 @@ class Dismiss {
 			update_user_meta( get_current_user_id(), "{$this->prefix}_{$this->id}", true );
 			return;
 		}
-		update_option( "{$this->prefix}_{$this->id}", true );
+		update_option( "{$this->prefix}_{$this->id}", true, false );
 	}
 }
