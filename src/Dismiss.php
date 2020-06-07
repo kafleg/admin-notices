@@ -52,7 +52,7 @@ class Dismiss {
 	 * @since 1.0
 	 * @param string $id     A unique ID for this notice. Can contain lowercase characters and underscores.
 	 * @param string $prefix The prefix that will be used for the option/user-meta.
-	 * @param string $scope
+	 * @param string $scope  Controls where the dismissal will be saved: user or global.
 	 */
 	public function __construct( $id, $prefix, $scope = 'global' ) {
 
