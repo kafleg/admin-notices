@@ -289,7 +289,9 @@ class Notice {
 			require_once ABSPATH . 'wp-admin/includes/screen.php';
 		}
 
+		/** @var \WP_Screen $current_screen */
+		$current_screen = get_current_screen();
 		// Check if we're on one of the defined screens.
-		return ( in_array( get_current_screen()->id, $this->options['screens'], true ) );
+		return ( in_array( $current_screen->id, $this->options['screens'], true ) );
 	}
 }
