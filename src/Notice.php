@@ -84,8 +84,8 @@ class Notice {
 	private $allowed_html = [
 		'p'      => [],
 		'a'      => [
-			'href'  => [],
-			'rel'   => [],
+			'href' => [],
+			'rel'  => [],
 		],
 		'em'     => [],
 		'strong' => [],
@@ -103,7 +103,7 @@ class Notice {
 		'info',
 		'success',
 		'error',
-		'warning'
+		'warning',
 	];
 
 	/**
@@ -135,10 +135,10 @@ class Notice {
 	public function __construct( $id, $title, $message, $options = [] ) {
 
 		// Set the object properties.
-		$this->id         = $id;
-		$this->title      = $title;
-		$this->message    = $message;
-		$this->options    = wp_parse_args( $options, $this->options );
+		$this->id      = $id;
+		$this->title   = $title;
+		$this->message = $message;
+		$this->options = wp_parse_args( $options, $this->options );
 
 		// Sanity check: Early exit if ID or message are empty.
 		if ( ! $this->id || ! $this->message ) {
@@ -225,7 +225,7 @@ class Notice {
 		];
 
 		// Make sure the defined type is allowed.
-		$this->options['type'] = in_array( $this->options['type'], $this->allowed_types ) ? $this->options['type'] : 'info';
+		$this->options['type'] = in_array( $this->options['type'], $this->allowed_types, true ) ? $this->options['type'] : 'info';
 
 		// Add the class for notice-type.
 		$classes[] = 'notice-' . $this->options['type'];
