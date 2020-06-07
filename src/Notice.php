@@ -41,6 +41,15 @@ class Notice {
 	private $message;
 
 	/**
+	 * The notice title.
+	 *
+	 * @access private
+	 * @since 1.0
+	 * @var string
+	 */
+	private $title;
+
+	/**
 	 * An instance of the \WPTRT\AdminNotices\Dismiss object.
 	 *
 	 * @access public
@@ -140,7 +149,7 @@ class Notice {
 		 * Allow filtering the allowed HTML tags array.
 		 *
 		 * @since 1.0.2
-		 * @param array The list of allowed HTML tags.
+		 * @param array $allowed_html The list of allowed HTML tags.
 		 * @return array
 		 */
 		$this->allowed_html = apply_filters( 'wptrt_admin_notices_allowed_html', $this->allowed_html );
