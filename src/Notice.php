@@ -38,7 +38,7 @@ class Notice {
 	 * @since 1.0
 	 * @var string
 	 */
-	private title;
+	private $title;
 
 	/**
 	 * The notice message.
