@@ -50,15 +50,6 @@ class Notice {
 	private $message;
 
 	/**
-	 * The notice title.
-	 *
-	 * @access private
-	 * @since 1.0
-	 * @var string
-	 */
-	private $title;
-
-	/**
 	 * An instance of the \WPTRT\AdminNotices\Dismiss object.
 	 *
 	 * @access public
