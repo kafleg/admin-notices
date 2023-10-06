@@ -63,42 +63,46 @@ class Dismiss {
 
 		// Handle AJAX requests to dismiss the notice.
 		add_action( 'wp_ajax_wptrt_dismiss_notice', [ $this, 'ajax_maybe_dismiss_notice' ] );
+
+		// Print the script after common.js.
+		add_action( 'admin_enqueue_scripts', array( $this, 'add_script' ) );
 	}
 
 	/**
 	 * Print the script for dismissing the notice.
 	 *
-	 * @access private
 	 * @since 1.0
 	 * @return void
 	 */
-	public function print_script() {
+	public function add_script() {
 
-		// Create a nonce.
-		$nonce = wp_create_nonce( 'wptrt_dismiss_notice_' . $this->id );
-		?>
-		<script>
-		window.addEventListener( 'load', function() {
-			var dismissBtn  = document.querySelector( '#wptrt-notice-<?php echo esc_attr( $this->id ); ?> .notice-dismiss' );
+		$id             = esc_attr( $this->id );
+		$nonce          = wp_create_nonce( 'wptrt_dismiss_notice_' . $this->id );
+		$admin_ajax_url = esc_url( admin_url( 'admin-ajax.php' ) );
 
-			// Add an event listener to the dismiss button.
-			dismissBtn.addEventListener( 'click', function( event ) {
-				var httpRequest = new XMLHttpRequest(),
-					postData    = '';
+		$script = <<<EOD
+jQuery( function() {
+    var dismissBtn  = document.querySelector( '#wptrt-notice-$id .notice-dismiss' );
 
-				// Build the data to send in our request.
-				// Data has to be formatted as a string here.
-				postData += 'id=<?php echo esc_attr( rawurlencode( $this->id ) ); ?>';
-				postData += '&action=wptrt_dismiss_notice';
-				postData += '&nonce=<?php echo esc_html( $nonce ); ?>';
+    // Add an event listener to the dismiss button.
+    dismissBtn.addEventListener( 'click', function( event ) {
+    	var httpRequest = new XMLHttpRequest(),
+    		postData    = '';
 
-				httpRequest.open( 'POST', '<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>' );
-				httpRequest.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded' )
-				httpRequest.send( postData );
-			});
-		});
-		</script>
-		<?php
+    	// Build the data to send in our request.
+    	// Data has to be formatted as a string here.
+    	postData += 'id=$id';
+    	postData += '&action=wptrt_dismiss_notice';
+    	postData += '&nonce=$nonce';
+
+    	httpRequest.open( 'POST', '$admin_ajax_url' );
+    	httpRequest.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded' )
+    	httpRequest.send( postData );
+    });
+});
+EOD;
+
+		wp_add_inline_script( 'common', $script, 'after' );
 	}
 
 	/**
